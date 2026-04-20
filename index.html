@@ -55,7 +55,15 @@
 <!-- HEADER -->
 <header class="bg-white border-b border-stone-200 sticky top-0 z-40">
   <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
-    <img src="RKPALANCA-horiz.png" alt="RK Palanca Fontestad" class="h-9 w-auto">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 bg-rk-black rounded flex items-center justify-center">
+        <span class="text-white font-extrabold text-sm tracking-tight">R<span class="text-rk-orange">K</span></span>
+      </div>
+      <div class="leading-tight">
+        <div class="font-bold text-sm tracking-wide">PALANCA FONTESTAD</div>
+        <div class="text-[10px] text-stone-500 tracking-widest">BY REALMARK INMOBILIARIA</div>
+      </div>
+    </div>
     <div class="hidden sm:flex items-center gap-6 text-xs text-stone-600">
       <div class="flex items-center gap-2">
         <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
@@ -192,7 +200,7 @@
     </div>
   </div>
 
-  <!-- PASO 5: Extras -->
+  <!-- PASO 5: Extras de la vivienda -->
   <div id="step-5" class="step bg-white rounded-2xl border border-stone-200 p-6 sm:p-8">
     <h2 class="font-extrabold text-2xl mb-2">¿Qué extras tiene la vivienda?</h2>
     <p class="text-stone-500 text-sm mb-6">Selecciona todos los que correspondan (opcional)</p>
@@ -203,14 +211,39 @@
     </div>
   </div>
 
-  <!-- PASO 6: Contacto -->
+  <!-- PASO 6: Extras del entorno -->
   <div id="step-6" class="step bg-white rounded-2xl border border-stone-200 p-6 sm:p-8">
+    <h2 class="font-extrabold text-2xl mb-2">¿Qué hay cerca de tu vivienda?</h2>
+    <p class="text-stone-500 text-sm mb-6">Los servicios y zonas verdes cercanas suman valor (opcional)</p>
 
-    <!-- Logo -->
-    <div class="flex justify-center mb-6 pb-6 border-b border-stone-100">
-      <img src="RKPALANCA-horiz.png" alt="RK Palanca Fontestad" class="h-10 w-auto">
+    <div class="mb-5">
+      <div class="text-xs font-bold text-rk-orange tracking-wide mb-2">TRANSPORTE</div>
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-3" id="entorno-transporte"></div>
     </div>
 
+    <div class="mb-5">
+      <div class="text-xs font-bold text-rk-orange tracking-wide mb-2">ZONAS VERDES Y DEPORTE</div>
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-3" id="entorno-verde"></div>
+    </div>
+
+    <div class="mb-5">
+      <div class="text-xs font-bold text-rk-orange tracking-wide mb-2">SERVICIOS Y CULTURA</div>
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-3" id="entorno-servicios"></div>
+    </div>
+
+    <div class="mb-2">
+      <div class="text-xs font-bold text-rk-orange tracking-wide mb-2">COMERCIO Y EDUCACIÓN</div>
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-3" id="entorno-comercio"></div>
+    </div>
+
+    <div class="mt-6 flex justify-between">
+      <button onclick="goTo('step-5')" class="text-stone-500 text-sm font-semibold hover:text-rk-black">← Atrás</button>
+      <button onclick="nextStep(6)" class="bg-rk-orange hover:bg-rk-orange-dark text-white font-bold px-6 py-3 rounded-full transition">Continuar →</button>
+    </div>
+  </div>
+
+  <!-- PASO 7: Contacto -->
+  <div id="step-7" class="step bg-white rounded-2xl border border-stone-200 p-6 sm:p-8">
     <div class="bg-rk-orange-light border border-rk-orange/30 rounded-xl p-4 mb-6">
       <div class="flex items-start gap-3">
         <div class="w-8 h-8 bg-rk-orange text-white rounded-full flex items-center justify-center flex-shrink-0 font-bold text-sm">✓</div>
@@ -250,13 +283,13 @@
       <div class="flex items-start gap-2 pt-2">
         <input type="checkbox" id="contact-rgpd" class="mt-1 accent-rk-orange">
         <label for="contact-rgpd" class="text-xs text-stone-500 leading-relaxed">
-          Acepto la <a href="https://www.inmobiliariapalanca.com/politica-de-privacidad/" target="_blank" class="underline text-rk-orange hover:text-rk-orange-dark font-semibold">política de privacidad</a> y que RK Palanca Fontestad me contacte con información sobre mi valoración. Mis datos están protegidos según el RGPD.
+          Acepto la política de privacidad y que RK Palanca Fontestad me contacte con información sobre mi valoración. Mis datos están protegidos según el RGPD.
         </label>
       </div>
     </div>
 
     <div class="mt-6 flex justify-between items-center">
-      <button onclick="goTo('step-5')" class="text-stone-500 text-sm font-semibold hover:text-rk-black">← Atrás</button>
+      <button onclick="goTo('step-6')" class="text-stone-500 text-sm font-semibold hover:text-rk-black">← Atrás</button>
       <button onclick="submitForm()" id="btn-submit" class="bg-rk-orange hover:bg-rk-orange-dark text-white font-bold px-8 py-3.5 rounded-full transition shadow-lg shadow-rk-orange/25">
         Ver mi valoración →
       </button>
@@ -318,7 +351,7 @@
           <span class="text-rk-orange group-hover:translate-x-1 transition">→</span>
         </a>
         <button onclick="restart()" class="w-full p-4 border border-stone-200 rounded-xl hover:border-stone-400 transition text-sm font-semibold text-stone-600">
-          ↺ Valorar otra vivienda
+          ↻ Valorar otra vivienda
         </button>
       </div>
     </div>
@@ -330,6 +363,7 @@
 
 </section>
 
+<!-- ADMIN PANEL (solo red local) -->
 <!-- FOOTER -->
 <footer class="border-t border-stone-200 bg-white mt-8">
   <div class="max-w-6xl mx-auto px-4 sm:px-6 py-6 text-center text-xs text-stone-500">
@@ -337,104 +371,180 @@
   </div>
 </footer>
 
+<!-- Config externa opcional (crea config.js junto al HTML para sobrescribir la URL del webhook) -->
 <script src="config.js" onerror="void 0"></script>
 
 <script>
+// ============================================================
+// CONFIGURACIÓN DEL WEBHOOK (Google Sheets)
+// ============================================================
+// Esta URL se puede sobrescribir desde un archivo externo `config.js`
+// colocado junto al HTML. Si existe y define window.RK_CONFIG.WEBHOOK_URL,
+// esa URL tiene prioridad. Si no existe, se usa la que está aquí.
+// Ver GUIA-SETUP-GOOGLE-SHEETS.md para más detalles.
 const WEBHOOK_URL_DEFAULT = 'https://script.google.com/macros/s/AKfycbxaRsvdoRkyTdjUFj5vqTKosiLEXVcr2_k3flNsutGi68eJaf97qjlsCTH4DTb83ApmGA/exec';
 const WEBHOOK_URL = (window.RK_CONFIG && window.RK_CONFIG.WEBHOOK_URL) || WEBHOOK_URL_DEFAULT;
 
+// ============================================================
+// DATOS — PRECIOS MEDIOS €/m² (ABRIL 2026)
+// Fuente: investigación RK · Fotocasa + RealAdvisor
+// Precios diferenciados pisos (piso/ático/dúplex) y casas (chalet/adosado)
+// ============================================================
 const MUNICIPIOS = {
-  foios:         { nombre: 'Foios',               comarca: 'Horta Nord', eurom2_piso: 1516, eurom2_casa: 1394, demanda: 'Alta',      tiempoVenta: 60 },
-  massamagrell:  { nombre: 'Massamagrell',        comarca: 'Horta Nord', eurom2_piso: 1424, eurom2_casa: 1391, demanda: 'Alta',      tiempoVenta: 62 },
-  meliana:       { nombre: 'Meliana',             comarca: 'Horta Nord', eurom2_piso: 1750, eurom2_casa: 1700, demanda: 'Alta',      tiempoVenta: 55 },
-  museros:       { nombre: 'Museros',             comarca: 'Horta Nord', eurom2_piso: 2434, eurom2_casa: 2139, demanda: 'Muy alta',  tiempoVenta: 45 },
-  godella:       { nombre: 'Godella',             comarca: 'Horta Nord', eurom2_piso: 1923, eurom2_casa: 2393, demanda: 'Muy alta',  tiempoVenta: 45 },
-  rocafort:      { nombre: 'Rocafort',            comarca: 'Horta Nord', eurom2_piso: 1933, eurom2_casa: 2445, demanda: 'Muy alta',  tiempoVenta: 50 },
-  alboraia:      { nombre: 'Alboraia',            comarca: 'Horta Nord', eurom2_piso: 3265, eurom2_casa: 2009, demanda: 'Muy alta',  tiempoVenta: 40 },
-  tavernes:      { nombre: 'Tavernes Blanques',   comarca: 'Horta Nord', eurom2_piso: 2098, eurom2_casa: 2098, demanda: 'Alta',      tiempoVenta: 50 },
-  puzol:         { nombre: 'Puçol',               comarca: 'Horta Nord', eurom2_piso: 1881, eurom2_casa: 1947, demanda: 'Alta',      tiempoVenta: 55 },
-  burjassot:     { nombre: 'Burjassot',           comarca: 'Horta Nord', eurom2_piso: 1576, eurom2_casa: 1603, demanda: 'Alta',      tiempoVenta: 60 },
-  moncada:       { nombre: 'Moncada',             comarca: 'Horta Nord', eurom2_piso: 1556, eurom2_casa: 1791, demanda: 'Alta',      tiempoVenta: 60 },
-  albalat:       { nombre: 'Albalat dels Sorells',comarca: 'Horta Nord', eurom2_piso: 1675, eurom2_casa: 1675, demanda: 'Media',     tiempoVenta: 75 },
-  massalfassar:  { nombre: 'Massalfassar',        comarca: 'Horta Nord', eurom2_piso: 1802, eurom2_casa: 1802, demanda: 'Media',     tiempoVenta: 70 },
-  paterna:       { nombre: 'Paterna',             comarca: 'Horta Oest', eurom2_piso: 1763, eurom2_casa: 2279, demanda: 'Alta',      tiempoVenta: 55 },
-  mislata:       { nombre: 'Mislata',             comarca: 'Horta Oest', eurom2_piso: 1882, eurom2_casa: 1751, demanda: 'Muy alta',  tiempoVenta: 40 },
-  quart:         { nombre: 'Quart de Poblet',     comarca: 'Horta Oest', eurom2_piso: 2234, eurom2_casa: 1370, demanda: 'Alta',      tiempoVenta: 55 },
-  aldaia:        { nombre: 'Aldaia',              comarca: 'Horta Oest', eurom2_piso: 1878, eurom2_casa: 1308, demanda: 'Alta',      tiempoVenta: 60 },
-  manises:       { nombre: 'Manises',             comarca: 'Horta Oest', eurom2_piso: 1584, eurom2_casa: 1457, demanda: 'Alta',      tiempoVenta: 60 },
-  xirivella:     { nombre: 'Xirivella',           comarca: 'Horta Oest', eurom2_piso: 1546, eurom2_casa: 1444, demanda: 'Alta',      tiempoVenta: 58 },
-  picanya:       { nombre: 'Picanya',             comarca: 'Horta Oest', eurom2_piso: 1687, eurom2_casa: 1807, demanda: 'Alta',      tiempoVenta: 55 },
-  torrent:       { nombre: 'Torrent',             comarca: 'Horta Oest', eurom2_piso: 1528, eurom2_casa: 1558, demanda: 'Alta',      tiempoVenta: 60 },
-  alaquas:       { nombre: 'Alaquàs',             comarca: 'Horta Oest', eurom2_piso: 1436, eurom2_casa: 1159, demanda: 'Media',     tiempoVenta: 65 },
-  paiporta:      { nombre: 'Paiporta',            comarca: 'Horta Sud',  eurom2_piso: 1688, eurom2_casa: 1443, demanda: 'Alta',      tiempoVenta: 55 },
-  massanassa:    { nombre: 'Massanassa',          comarca: 'Horta Sud',  eurom2_piso: 1683, eurom2_casa: 1101, demanda: 'Media',     tiempoVenta: 70 },
-  alfafar:       { nombre: 'Alfafar',             comarca: 'Horta Sud',  eurom2_piso: 1474, eurom2_casa: 1201, demanda: 'Alta',      tiempoVenta: 60 },
-  albal:         { nombre: 'Albal',               comarca: 'Horta Sud',  eurom2_piso: 1470, eurom2_casa: 1096, demanda: 'Alta',      tiempoVenta: 60 },
-  sedavi:        { nombre: 'Sedaví',              comarca: 'Horta Sud',  eurom2_piso: 1432, eurom2_casa: 1258, demanda: 'Alta',      tiempoVenta: 60 },
-  catarroja:     { nombre: 'Catarroja',           comarca: 'Horta Sud',  eurom2_piso: 1357, eurom2_casa: 1049, demanda: 'Media',     tiempoVenta: 65 },
-  benetusser:    { nombre: 'Benetússer',          comarca: 'Horta Sud',  eurom2_piso: 1336, eurom2_casa: 1215, demanda: 'Alta',      tiempoVenta: 60 },
-  picassent:     { nombre: 'Picassent',           comarca: 'Horta Sud',  eurom2_piso: 1179, eurom2_casa: 1265, demanda: 'Media',     tiempoVenta: 70 },
-  silla:         { nombre: 'Silla',               comarca: 'Horta Sud',  eurom2_piso: 1240, eurom2_casa: 1101, demanda: 'Media',     tiempoVenta: 70 },
-  val_eixample:  { nombre: 'L\'Eixample',         comarca: 'València',   eurom2_piso: 5540, eurom2_casa: 5540, demanda: 'Muy alta',  tiempoVenta: 30 },
-  val_ciutat:    { nombre: 'Ciutat Vella',        comarca: 'València',   eurom2_piso: 5045, eurom2_casa: 5045, demanda: 'Muy alta',  tiempoVenta: 35 },
-  val_plareal:   { nombre: 'El Pla del Real',     comarca: 'València',   eurom2_piso: 4495, eurom2_casa: 4495, demanda: 'Muy alta',  tiempoVenta: 35 },
-  val_extramurs: { nombre: 'Extramurs',           comarca: 'València',   eurom2_piso: 4040, eurom2_casa: 4040, demanda: 'Muy alta',  tiempoVenta: 40 },
-  val_campanar:  { nombre: 'Campanar',            comarca: 'València',   eurom2_piso: 3960, eurom2_casa: 3960, demanda: 'Muy alta',  tiempoVenta: 40 },
-  val_quatre:    { nombre: 'Quatre Carreres',     comarca: 'València',   eurom2_piso: 3866, eurom2_casa: 3866, demanda: 'Muy alta',  tiempoVenta: 40 },
-  val_caminsmar: { nombre: 'Camins al Grau',      comarca: 'València',   eurom2_piso: 3784, eurom2_casa: 3784, demanda: 'Muy alta',  tiempoVenta: 40 },
-  val_maritims:  { nombre: 'Poblats Marítims',    comarca: 'València',   eurom2_piso: 3541, eurom2_casa: 3541, demanda: 'Alta',      tiempoVenta: 45 },
-  val_algiros:   { nombre: 'Algirós',             comarca: 'València',   eurom2_piso: 3464, eurom2_casa: 3464, demanda: 'Alta',      tiempoVenta: 45 },
-  val_benimaclet:{ nombre: 'Benimaclet',          comarca: 'València',   eurom2_piso: 3222, eurom2_casa: 3222, demanda: 'Alta',      tiempoVenta: 45 },
-  val_saidia:    { nombre: 'La Saïdia',           comarca: 'València',   eurom2_piso: 3192, eurom2_casa: 3192, demanda: 'Alta',      tiempoVenta: 45 },
-  val_patraix:   { nombre: 'Patraix',             comarca: 'València',   eurom2_piso: 3178, eurom2_casa: 3178, demanda: 'Alta',      tiempoVenta: 45 },
-  val_benicalap: { nombre: 'Benicalap',           comarca: 'València',   eurom2_piso: 3134, eurom2_casa: 3134, demanda: 'Alta',      tiempoVenta: 50 },
-  val_jesus:     { nombre: 'Jesús',               comarca: 'València',   eurom2_piso: 2925, eurom2_casa: 2925, demanda: 'Alta',      tiempoVenta: 50 },
-  val_olivereta: { nombre: 'L\'Olivereta',        comarca: 'València',   eurom2_piso: 2782, eurom2_casa: 2782, demanda: 'Alta',      tiempoVenta: 55 },
-  val_rascanya:  { nombre: 'Rascanya',            comarca: 'València',   eurom2_piso: 2548, eurom2_casa: 2548, demanda: 'Media',     tiempoVenta: 60 },
-  otro:          { nombre: 'Otro municipio',      comarca: 'Otro',       eurom2_piso: 1600, eurom2_casa: 1500, demanda: 'Media',     tiempoVenta: 65 },
+  // ── L'HORTA NORD (zona principal RK) ──
+  foios:         { nombre: 'Foios',               comarca: 'Horta Nord', eurom2_piso: 1516, eurom2_casa: 1394, premium: 1.00, demanda: 'Alta',      tiempoVenta: 60 },
+  massamagrell:  { nombre: 'Massamagrell',        comarca: 'Horta Nord', eurom2_piso: 1424, eurom2_casa: 1391, premium: 1.00, demanda: 'Alta',      tiempoVenta: 62 },
+  meliana:       { nombre: 'Meliana',             comarca: 'Horta Nord', eurom2_piso: 1750, eurom2_casa: 1700, premium: 1.00, demanda: 'Alta',      tiempoVenta: 55 },
+  museros:       { nombre: 'Museros',             comarca: 'Horta Nord', eurom2_piso: 2434, eurom2_casa: 2139, premium: 1.00, demanda: 'Muy alta',  tiempoVenta: 45 },
+  godella:       { nombre: 'Godella',             comarca: 'Horta Nord', eurom2_piso: 1923, eurom2_casa: 2393, premium: 1.08, demanda: 'Muy alta',  tiempoVenta: 45 },
+  rocafort:      { nombre: 'Rocafort',            comarca: 'Horta Nord', eurom2_piso: 2150, eurom2_casa: 2650, premium: 1.10, demanda: 'Muy alta',  tiempoVenta: 50 },
+  alboraia:      { nombre: 'Alboraia',            comarca: 'Horta Nord', eurom2_piso: 3265, eurom2_casa: 2009, premium: 1.00, demanda: 'Muy alta',  tiempoVenta: 40 },
+  tavernes:      { nombre: 'Tavernes Blanques',   comarca: 'Horta Nord', eurom2_piso: 2098, eurom2_casa: 2098, premium: 1.00, demanda: 'Alta',      tiempoVenta: 50 },
+  puzol:         { nombre: 'Puçol',               comarca: 'Horta Nord', eurom2_piso: 1881, eurom2_casa: 1947, premium: 1.00, demanda: 'Alta',      tiempoVenta: 55 },
+  burjassot:     { nombre: 'Burjassot',           comarca: 'Horta Nord', eurom2_piso: 1576, eurom2_casa: 1603, premium: 1.00, demanda: 'Alta',      tiempoVenta: 60 },
+  moncada:       { nombre: 'Moncada',             comarca: 'Horta Nord', eurom2_piso: 1556, eurom2_casa: 1791, premium: 1.00, demanda: 'Alta',      tiempoVenta: 60 },
+  albalat:       { nombre: 'Albalat dels Sorells',comarca: 'Horta Nord', eurom2_piso: 1675, eurom2_casa: 1675, premium: 1.00, demanda: 'Media',     tiempoVenta: 75 },
+  massalfassar:  { nombre: 'Massalfassar',        comarca: 'Horta Nord', eurom2_piso: 1802, eurom2_casa: 1802, premium: 1.00, demanda: 'Media',     tiempoVenta: 70 },
+
+  // ── L'HORTA OEST ──
+  paterna:       { nombre: 'Paterna',             comarca: 'Horta Oest', eurom2_piso: 1763, eurom2_casa: 2279, premium: 1.00, demanda: 'Alta',      tiempoVenta: 55 },
+  mislata:       { nombre: 'Mislata',             comarca: 'Horta Oest', eurom2_piso: 1882, eurom2_casa: 1751, premium: 1.00, demanda: 'Muy alta',  tiempoVenta: 40 },
+  quart:         { nombre: 'Quart de Poblet',     comarca: 'Horta Oest', eurom2_piso: 2234, eurom2_casa: 1370, premium: 1.00, demanda: 'Alta',      tiempoVenta: 55 },
+  aldaia:        { nombre: 'Aldaia',              comarca: 'Horta Oest', eurom2_piso: 1878, eurom2_casa: 1308, premium: 1.00, demanda: 'Alta',      tiempoVenta: 60 },
+  manises:       { nombre: 'Manises',             comarca: 'Horta Oest', eurom2_piso: 1584, eurom2_casa: 1457, premium: 1.00, demanda: 'Alta',      tiempoVenta: 60 },
+  xirivella:     { nombre: 'Xirivella',           comarca: 'Horta Oest', eurom2_piso: 1546, eurom2_casa: 1444, premium: 1.00, demanda: 'Alta',      tiempoVenta: 58 },
+  picanya:       { nombre: 'Picanya',             comarca: 'Horta Oest', eurom2_piso: 1687, eurom2_casa: 1807, premium: 1.00, demanda: 'Alta',      tiempoVenta: 55 },
+  torrent:       { nombre: 'Torrent',             comarca: 'Horta Oest', eurom2_piso: 1528, eurom2_casa: 1558, premium: 1.00, demanda: 'Alta',      tiempoVenta: 60 },
+  alaquas:       { nombre: 'Alaquàs',             comarca: 'Horta Oest', eurom2_piso: 1436, eurom2_casa: 1159, premium: 1.00, demanda: 'Media',     tiempoVenta: 65 },
+
+  // ── L'HORTA SUD ──
+  paiporta:      { nombre: 'Paiporta',            comarca: 'Horta Sud',  eurom2_piso: 1688, eurom2_casa: 1443, premium: 1.00, demanda: 'Alta',      tiempoVenta: 55 },
+  massanassa:    { nombre: 'Massanassa',          comarca: 'Horta Sud',  eurom2_piso: 1683, eurom2_casa: 1101, premium: 1.00, demanda: 'Media',     tiempoVenta: 70 },
+  alfafar:       { nombre: 'Alfafar',             comarca: 'Horta Sud',  eurom2_piso: 1474, eurom2_casa: 1201, premium: 1.00, demanda: 'Alta',      tiempoVenta: 60 },
+  albal:         { nombre: 'Albal',               comarca: 'Horta Sud',  eurom2_piso: 1470, eurom2_casa: 1096, premium: 1.00, demanda: 'Alta',      tiempoVenta: 60 },
+  sedavi:        { nombre: 'Sedaví',              comarca: 'Horta Sud',  eurom2_piso: 1432, eurom2_casa: 1258, premium: 1.00, demanda: 'Alta',      tiempoVenta: 60 },
+  catarroja:     { nombre: 'Catarroja',           comarca: 'Horta Sud',  eurom2_piso: 1357, eurom2_casa: 1049, premium: 1.00, demanda: 'Media',     tiempoVenta: 65 },
+  benetusser:    { nombre: 'Benetússer',          comarca: 'Horta Sud',  eurom2_piso: 1336, eurom2_casa: 1215, premium: 1.00, demanda: 'Alta',      tiempoVenta: 60 },
+  picassent:     { nombre: 'Picassent',           comarca: 'Horta Sud',  eurom2_piso: 1179, eurom2_casa: 1265, premium: 1.00, demanda: 'Media',     tiempoVenta: 70 },
+  silla:         { nombre: 'Silla',               comarca: 'Horta Sud',  eurom2_piso: 1240, eurom2_casa: 1101, premium: 1.00, demanda: 'Media',     tiempoVenta: 70 },
+
+  // ── VALÈNCIA CIUDAD (distritos más buscados) ──
+  val_eixample:  { nombre: 'L\'Eixample',     comarca: 'València', eurom2_piso: 5540, eurom2_casa: 5540, premium: 1.05, demanda: 'Muy alta', tiempoVenta: 30 },
+  val_ciutat:    { nombre: 'Ciutat Vella',    comarca: 'València', eurom2_piso: 5045, eurom2_casa: 5045, premium: 1.03, demanda: 'Muy alta', tiempoVenta: 35 },
+  val_plareal:   { nombre: 'El Pla del Real', comarca: 'València', eurom2_piso: 4495, eurom2_casa: 4495, premium: 1.05, demanda: 'Muy alta', tiempoVenta: 35 },
+  val_extramurs: { nombre: 'Extramurs',       comarca: 'València', eurom2_piso: 4040, eurom2_casa: 4040, premium: 1.00, demanda: 'Muy alta', tiempoVenta: 40 },
+  val_campanar:  { nombre: 'Campanar',        comarca: 'València', eurom2_piso: 3960, eurom2_casa: 3960, premium: 1.00, demanda: 'Muy alta', tiempoVenta: 40 },
+  val_quatre:    { nombre: 'Quatre Carreres', comarca: 'València', eurom2_piso: 3866, eurom2_casa: 3866, premium: 1.00, demanda: 'Muy alta', tiempoVenta: 40 },
+  val_caminsmar: { nombre: 'Camins al Grau',  comarca: 'València', eurom2_piso: 3784, eurom2_casa: 3784, premium: 1.00, demanda: 'Muy alta', tiempoVenta: 40 },
+  val_maritims:  { nombre: 'Poblats Marítims',comarca: 'València', eurom2_piso: 3541, eurom2_casa: 3541, premium: 1.00, demanda: 'Alta',     tiempoVenta: 45 },
+  val_algiros:   { nombre: 'Algirós',         comarca: 'València', eurom2_piso: 3464, eurom2_casa: 3464, premium: 1.00, demanda: 'Alta',     tiempoVenta: 45 },
+  val_benimaclet:{ nombre: 'Benimaclet',      comarca: 'València', eurom2_piso: 3222, eurom2_casa: 3222, premium: 1.00, demanda: 'Alta',     tiempoVenta: 45 },
+  val_saidia:    { nombre: 'La Saïdia',       comarca: 'València', eurom2_piso: 3192, eurom2_casa: 3192, premium: 1.00, demanda: 'Alta',     tiempoVenta: 45 },
+  val_patraix:   { nombre: 'Patraix',         comarca: 'València', eurom2_piso: 3178, eurom2_casa: 3178, premium: 1.00, demanda: 'Alta',     tiempoVenta: 45 },
+  val_benicalap: { nombre: 'Benicalap',       comarca: 'València', eurom2_piso: 3134, eurom2_casa: 3134, premium: 1.00, demanda: 'Alta',     tiempoVenta: 50 },
+  val_jesus:     { nombre: 'Jesús',           comarca: 'València', eurom2_piso: 2925, eurom2_casa: 2925, premium: 1.00, demanda: 'Alta',     tiempoVenta: 50 },
+  val_olivereta: { nombre: 'L\'Olivereta',    comarca: 'València', eurom2_piso: 2782, eurom2_casa: 2782, premium: 1.00, demanda: 'Alta',     tiempoVenta: 55 },
+  val_rascanya:  { nombre: 'Rascanya',        comarca: 'València', eurom2_piso: 2548, eurom2_casa: 2548, premium: 1.00, demanda: 'Media',    tiempoVenta: 60 },
+
+  otro:          { nombre: 'Otro municipio',             comarca: 'Otro',       eurom2_piso: 1600, eurom2_casa: 1500, premium: 1.00, demanda: 'Media',     tiempoVenta: 65 },
 };
 
+// Tipos de vivienda — cada tipo usa precio de "piso" o "casa"
 const TIPOS = {
   piso:       { nombre: 'Piso',        icon: '🏢', factor: 1.00, usaPrecio: 'piso' },
   atico:      { nombre: 'Ático',       icon: '🏙️', factor: 1.18, usaPrecio: 'piso' },
   duplex:     { nombre: 'Dúplex',      icon: '🏠', factor: 1.08, usaPrecio: 'piso' },
   chalet:     { nombre: 'Chalet / Casa independiente', icon: '🏡', factor: 1.00, usaPrecio: 'casa' },
   adosado:    { nombre: 'Adosado',     icon: '🏘️', factor: 1.00, usaPrecio: 'casa' },
-  planta_baja:{ nombre: 'Planta baja', icon: '🚪', factor: 0.92, usaPrecio: 'piso' },
+  planta_baja:{ nombre: 'Planta baja', icon: '🔑', factor: 0.92, usaPrecio: 'piso' },
 };
 
 const ESTADOS = [
-  { id: 'nuevo',          nombre: 'A estrenar / Obra nueva',      desc: 'Nunca se ha vivido en ella',                    factor: 1.20 },
-  { id: 'reformado',      nombre: 'Reformado recientemente',      desc: 'Reforma integral en los últimos 5 años',        factor: 1.10 },
-  { id: 'bueno',          nombre: 'Buen estado',                  desc: 'Se puede entrar a vivir sin obras',             factor: 1.00 },
-  { id: 'reformar',       nombre: 'Necesita reforma',             desc: 'Cocina, baños o instalaciones antiguos',        factor: 0.82 },
-  { id: 'reformar_total', nombre: 'A reformar por completo',      desc: 'Requiere reforma integral',                     factor: 0.70 },
+  { id: 'nuevo',     nombre: 'A estrenar / Obra nueva', desc: 'Nunca se ha vivido en ella',      factor: 1.20 },
+  { id: 'reformado', nombre: 'Reformado recientemente', desc: 'Reforma integral en los últimos 5 años', factor: 1.10 },
+  { id: 'bueno',     nombre: 'Buen estado',              desc: 'Se puede entrar a vivir sin obras',      factor: 1.00 },
+  { id: 'reformar',  nombre: 'Necesita reforma',         desc: 'Cocina, baños o instalaciones antiguos', factor: 0.82 },
+  { id: 'reformar_total', nombre: 'A reformar por completo', desc: 'Requiere reforma integral',       factor: 0.70 },
 ];
 
 const EXTRAS = [
-  { id: 'terraza',   nombre: 'Terraza',            factor: 0.05 },
-  { id: 'balcon',    nombre: 'Balcón',             factor: 0.02 },
-  { id: 'garaje',    nombre: 'Garaje',             factor: 0.06 },
-  { id: 'trastero',  nombre: 'Trastero',           factor: 0.02 },
-  { id: 'ascensor',  nombre: 'Ascensor',           factor: 0.04 },
+  { id: 'terraza',   nombre: 'Terraza',       factor: 0.05 },
+  { id: 'balcon',    nombre: 'Balcón',        factor: 0.02 },
+  { id: 'garaje',    nombre: 'Garaje',        factor: 0.06 },
+  { id: 'trastero',  nombre: 'Trastero',      factor: 0.02 },
+  { id: 'ascensor',  nombre: 'Ascensor',      factor: 0.04 },
   { id: 'aire',      nombre: 'Aire acondicionado', factor: 0.02 },
-  { id: 'piscina',   nombre: 'Piscina',            factor: 0.05 },
-  { id: 'jardin',    nombre: 'Jardín',             factor: 0.04 },
-  { id: 'amueblado', nombre: 'Amueblado',          factor: 0.01 },
+  { id: 'piscina',   nombre: 'Piscina',       factor: 0.05 },
+  { id: 'jardin',    nombre: 'Jardín',        factor: 0.04 },
+  { id: 'amueblado', nombre: 'Amueblado',     factor: 0.01 },
 ];
 
+// Extras de entorno (cerca de la vivienda) — agrupados por categoría.
+// Los factores son más pequeños que los extras de la vivienda (0.5%–2%)
+// porque suman en conjunto y reflejan calidad de vida, no características propias.
+const EXTRAS_ENTORNO = {
+  transporte: [
+    { id: 'metro',      nombre: 'Metro',         icon: '🚇', factor: 0.020 },
+    { id: 'cercanias',  nombre: 'Cercanías',     icon: '🚆', factor: 0.015 },
+    { id: 'bus',        nombre: 'Bus / EMT',     icon: '🚌', factor: 0.008 },
+    { id: 'autovia',    nombre: 'Acceso autovía',icon: '🛣️', factor: 0.010 },
+    { id: 'aparcar',    nombre: 'Fácil aparcar', icon: '🅿️', factor: 0.008 },
+  ],
+  verde: [
+    { id: 'parque',        nombre: 'Parque cercano',    icon: '🌳', factor: 0.015 },
+    { id: 'jardines',      nombre: 'Jardines',          icon: '🌿', factor: 0.010 },
+    { id: 'polideportivo', nombre: 'Polideportivo',     icon: '🏟️', factor: 0.012 },
+    { id: 'gimnasio',      nombre: 'Gimnasio',          icon: '💪', factor: 0.006 },
+    { id: 'playa',         nombre: 'Playa cercana',     icon: '🏖️', factor: 0.025 },
+    { id: 'huerta',        nombre: 'Vistas a la huerta',icon: '🌾', factor: 0.010 },
+  ],
+  servicios: [
+    { id: 'centro_salud',  nombre: 'Centro de salud',   icon: '🏥', factor: 0.010 },
+    { id: 'biblioteca',    nombre: 'Biblioteca',        icon: '📚', factor: 0.006 },
+    { id: 'cultural',      nombre: 'Centro cultural',   icon: '🎭', factor: 0.006 },
+    { id: 'cine',          nombre: 'Cine',              icon: '🎬', factor: 0.005 },
+    { id: 'museo',         nombre: 'Museo',             icon: '🏛️', factor: 0.005 },
+    { id: 'iglesia',       nombre: 'Iglesia / parroquia',icon: '⛪', factor: 0.003 },
+  ],
+  comercio: [
+    { id: 'supermercado', nombre: 'Supermercado',  icon: '🛒', factor: 0.010 },
+    { id: 'mercado',      nombre: 'Mercado',       icon: '🥖', factor: 0.008 },
+    { id: 'cc_comercial', nombre: 'C. Comercial',  icon: '🏬', factor: 0.008 },
+    { id: 'colegio',      nombre: 'Colegio',       icon: '🏫', factor: 0.015 },
+    { id: 'instituto',    nombre: 'Instituto',     icon: '🎓', factor: 0.010 },
+    { id: 'guarderia',    nombre: 'Guardería',     icon: '🧸', factor: 0.008 },
+  ],
+};
+
+// Tope máximo de factor acumulado por entorno (para que no dispare el precio si marcan todo)
+const ENTORNO_MAX_FACTOR = 0.10; // +10% máximo
+
+// ============================================================
+// ESTADO
+// ============================================================
 const data = {
-  municipio: null, tipo: null, m2: 100,
-  habitaciones: null, banos: null, estado: null, extras: [],
+  municipio: null,
+  tipo: null,
+  m2: 100,
+  habitaciones: null,
+  banos: null,
+  estado: null,
+  extras: [],
+  entorno: [],
   nombre: '', email: '', telefono: '', urgencia: '',
 };
 
-const STEPS = ['step-1','step-2','step-3','step-4','step-5','step-6'];
+const STEPS = ['step-1','step-2','step-3','step-4','step-5','step-6','step-7'];
 let currentStep = 0;
 
+// ============================================================
+// RENDER INICIAL DE OPCIONES
+// ============================================================
 function renderOptions() {
+  // Municipios — agrupados por comarca con filtrado
   renderMunicipios('Horta Nord', '');
 
+  // Tipos
   const gridT = document.getElementById('tipos-grid');
   Object.entries(TIPOS).forEach(([id, t]) => {
     const btn = document.createElement('button');
@@ -444,6 +554,7 @@ function renderOptions() {
     gridT.appendChild(btn);
   });
 
+  // Habitaciones
   const gridH = document.getElementById('hab-grid');
   ['1','2','3','4','5+'].forEach(n => {
     const btn = document.createElement('button');
@@ -453,6 +564,7 @@ function renderOptions() {
     gridH.appendChild(btn);
   });
 
+  // Baños
   const gridB = document.getElementById('ban-grid');
   ['1','2','3','4+'].forEach(n => {
     const btn = document.createElement('button');
@@ -462,6 +574,7 @@ function renderOptions() {
     gridB.appendChild(btn);
   });
 
+  // Estado
   const gridE = document.getElementById('estado-grid');
   ESTADOS.forEach(e => {
     const btn = document.createElement('button');
@@ -471,6 +584,7 @@ function renderOptions() {
     gridE.appendChild(btn);
   });
 
+  // Extras (multi)
   const gridX = document.getElementById('extras-grid');
   EXTRAS.forEach(x => {
     const btn = document.createElement('button');
@@ -478,6 +592,25 @@ function renderOptions() {
     btn.textContent = x.nombre;
     btn.onclick = () => toggleExtra(btn, x.id);
     gridX.appendChild(btn);
+  });
+
+  // Extras de entorno (multi, agrupados por categoría)
+  const entornoGrids = {
+    transporte: 'entorno-transporte',
+    verde:      'entorno-verde',
+    servicios:  'entorno-servicios',
+    comercio:   'entorno-comercio',
+  };
+  Object.entries(entornoGrids).forEach(([cat, gridId]) => {
+    const grid = document.getElementById(gridId);
+    if (!grid) return;
+    EXTRAS_ENTORNO[cat].forEach(x => {
+      const btn = document.createElement('button');
+      btn.className = 'option-btn border-2 border-stone-200 bg-white rounded-xl py-2.5 px-3 text-xs font-semibold flex items-center gap-2';
+      btn.innerHTML = `<span class="text-base">${x.icon}</span><span>${x.nombre}</span>`;
+      btn.onclick = () => toggleEntorno(btn, x.id);
+      grid.appendChild(btn);
+    });
   });
 }
 
@@ -495,22 +628,41 @@ function toggleExtra(btn, id) {
   else data.extras.push(id);
 }
 
-function checkStep3() {
-  document.getElementById('btn-next-3').disabled = !(data.m2 && data.habitaciones && data.banos);
+function toggleEntorno(btn, id) {
+  btn.classList.toggle('selected');
+  const idx = data.entorno.indexOf(id);
+  if (idx >= 0) data.entorno.splice(idx, 1);
+  else data.entorno.push(id);
 }
 
+function checkStep3() {
+  const ok = data.m2 && data.habitaciones && data.banos;
+  document.getElementById('btn-next-3').disabled = !ok;
+}
+
+// ============================================================
+// GESTIÓN DE MUNICIPIOS (filtrado por comarca + búsqueda)
+// ============================================================
 let comarcaActual = 'Horta Nord';
 
 function renderMunicipios(comarca, searchTerm) {
   const grid = document.getElementById('municipios-grid');
   const empty = document.getElementById('municipios-empty');
   grid.innerHTML = '';
+
   const term = (searchTerm || '').toLowerCase().trim();
   const matches = Object.entries(MUNICIPIOS).filter(([id, m]) => {
-    return (!term && m.comarca === comarca) || (term && m.nombre.toLowerCase().includes(term));
+    const matchComarca = !term && m.comarca === comarca;
+    const matchSearch = term && m.nombre.toLowerCase().includes(term);
+    return matchComarca || matchSearch;
   });
-  if (matches.length === 0) { empty.classList.remove('hidden'); return; }
+
+  if (matches.length === 0) {
+    empty.classList.remove('hidden');
+    return;
+  }
   empty.classList.add('hidden');
+
   matches.forEach(([id, m]) => {
     const btn = document.createElement('button');
     btn.className = 'option-btn border-2 border-stone-200 bg-white rounded-xl p-4 text-left';
@@ -534,16 +686,25 @@ function selectComarca(btn, comarca) {
 }
 
 function filterMunicipios(term) {
-  if (term && term.trim()) renderMunicipios(null, term);
-  else renderMunicipios(comarcaActual, '');
+  if (term && term.trim()) {
+    renderMunicipios(null, term);
+  } else {
+    renderMunicipios(comarcaActual, '');
+  }
 }
 
+// ============================================================
+// NAVEGACIÓN
+// ============================================================
 function goTo(stepId) {
   document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
-  document.getElementById(stepId).classList.add('active');
+  const target = document.getElementById(stepId);
+  if (target) target.classList.add('active');
+
   const idx = STEPS.indexOf(stepId);
   const isFormStep = idx >= 0;
   document.getElementById('progress-wrapper').classList.toggle('hidden', !isFormStep);
+
   if (isFormStep) {
     currentStep = idx;
     const pct = Math.round(((idx + 1) / STEPS.length) * 100);
@@ -551,39 +712,76 @@ function goTo(stepId) {
     document.getElementById('progress-percent').textContent = pct + '%';
     document.getElementById('progress-bar').style.width = pct + '%';
   }
+
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function nextStep(current) {
-  goTo(STEPS[current]);
+  goTo(STEPS[current]); // current es 1-indexado, STEPS es 0-indexado → step-(current+1)
 }
 
+// ============================================================
+// CÁLCULO DE VALORACIÓN
+// ============================================================
 function calcularValor() {
   const muni = MUNICIPIOS[data.municipio];
   const tipo = TIPOS[data.tipo];
   const estado = ESTADOS.find(e => e.id === data.estado);
+
+  // Seleccionar precio €/m² según tipo de vivienda (piso o casa)
   const eurom2Base = tipo.usaPrecio === 'casa' ? muni.eurom2_casa : muni.eurom2_piso;
-  let base = eurom2Base * data.m2 * tipo.factor * estado.factor;
+
+  // Factor premium del municipio (1.00 por defecto, superior en zonas prime)
+  const premium = muni.premium || 1.00;
+
+  let base = eurom2Base * data.m2 * tipo.factor * estado.factor * premium;
+
+  // Extras de la vivienda (suman % sobre base)
   let factorExtras = 1;
   data.extras.forEach(id => {
     const x = EXTRAS.find(e => e.id === id);
     if (x) factorExtras += x.factor;
   });
   base *= factorExtras;
+
+  // Extras del entorno (con tope máximo para evitar marcar todo)
+  let factorEntorno = 0;
+  const todosEntorno = [
+    ...EXTRAS_ENTORNO.transporte,
+    ...EXTRAS_ENTORNO.verde,
+    ...EXTRAS_ENTORNO.servicios,
+    ...EXTRAS_ENTORNO.comercio,
+  ];
+  data.entorno.forEach(id => {
+    const x = todosEntorno.find(e => e.id === id);
+    if (x) factorEntorno += x.factor;
+  });
+  // Limitar el bonus del entorno al tope definido
+  factorEntorno = Math.min(factorEntorno, ENTORNO_MAX_FACTOR);
+  base *= (1 + factorEntorno);
+
+  // Ajuste por ratio habitaciones/m² (umbrales ajustados para ser más realistas)
   const habNum = data.habitaciones === '5+' ? 5 : parseInt(data.habitaciones);
   const m2PorHab = data.m2 / habNum;
-  if (m2PorHab < 18) base *= 0.95;
-  if (m2PorHab > 35) base *= 1.03;
+  if (m2PorHab < 18) base *= 0.95;        // sobre-compartimentada
+  else if (m2PorHab >= 30) base *= 1.04;  // vivienda amplia (antes 35)
+  else if (m2PorHab >= 25) base *= 1.02;  // algo amplia (nuevo escalón intermedio)
+
+  const min = Math.round(base * 0.93 / 1000) * 1000;
+  const max = Math.round(base * 1.07 / 1000) * 1000;
+  const eurom2 = Math.round(base / data.m2);
+
   return {
-    min: Math.round(base * 0.93 / 1000) * 1000,
-    max: Math.round(base * 1.07 / 1000) * 1000,
-    eurom2: Math.round(base / data.m2),
+    min, max, eurom2,
     municipio: muni.nombre,
     tiempoVenta: muni.tiempoVenta,
     demanda: muni.demanda,
   };
 }
 
+// ============================================================
+// ENVÍO DE FORMULARIO
+// ============================================================
 function submitForm() {
   const nombre = document.getElementById('contact-nombre').value.trim();
   const email = document.getElementById('contact-email').value.trim();
@@ -596,12 +794,16 @@ function submitForm() {
     return;
   }
 
-  data.nombre = nombre; data.email = email;
-  data.telefono = telefono; data.urgencia = urgencia;
+  data.nombre = nombre;
+  data.email = email;
+  data.telefono = telefono;
+  data.urgencia = urgencia;
 
+  // Guardar lead localmente
   saveLead();
-  goTo('step-loading');
 
+  // Loading
+  goTo('step-loading');
   const loadingTexts = [
     'Cruzando datos con el histórico de RK Palanca Fontestad...',
     'Analizando 5.025 ventas desde 1976...',
@@ -623,31 +825,49 @@ function submitForm() {
     document.getElementById('result-eurom2').textContent = r.eurom2.toLocaleString('es-ES') + ' €';
     document.getElementById('result-tiempo').textContent = r.tiempoVenta + ' días';
     document.getElementById('result-demanda').textContent = r.demanda;
+
+    // Link WhatsApp pre-cumplimentado
     const wspMsg = encodeURIComponent(`Hola, soy ${data.nombre}. Acabo de hacer la valoración online de mi ${TIPOS[data.tipo].nombre} en ${r.municipio} (${data.m2} m²). Me gustaría afinar el precio con un asesor.`);
     document.getElementById('whatsapp-link').href = `https://wa.me/34961490135?text=${wspMsg}`;
+
     goTo('step-result');
   }, 2800);
 }
 
+// ============================================================
+// PERSISTENCIA DE LEADS (localStorage + webhook Google Sheets)
+// ============================================================
 function saveLead() {
   const r = calcularValor();
   const leadData = {
     fecha: new Date().toISOString(),
-    nombre: data.nombre, email: data.email, telefono: data.telefono,
+    nombre: data.nombre,
+    email: data.email,
+    telefono: data.telefono,
     municipio: MUNICIPIOS[data.municipio].nombre,
     tipo: TIPOS[data.tipo].nombre,
-    m2: data.m2, habitaciones: data.habitaciones, banos: data.banos,
+    m2: data.m2,
+    habitaciones: data.habitaciones,
+    banos: data.banos,
     estado: ESTADOS.find(e => e.id === data.estado).nombre,
     extras: data.extras.join(', '),
-    valoracion_min: r.min, valoracion_max: r.max, eurom2: r.eurom2,
+    entorno: data.entorno.join(', '),
+    valoracion_min: r.min,
+    valoracion_max: r.max,
+    eurom2: r.eurom2,
     urgencia: data.urgencia,
   };
-  if (WEBHOOK_URL) {
+
+  // Enviar al webhook de Google Sheets (si está configurado)
+  if (WEBHOOK_URL && WEBHOOK_URL.length > 0) {
     fetch(WEBHOOK_URL, {
-      method: 'POST', mode: 'no-cors',
+      method: 'POST',
+      mode: 'no-cors', // Google Apps Script requiere no-cors
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },
       body: JSON.stringify(leadData),
-    }).catch(err => console.warn('No se pudo enviar a Google Sheets:', err));
+    }).catch(err => {
+      console.warn('No se pudo enviar a Google Sheets:', err);
+    });
   }
 }
 
@@ -668,6 +888,9 @@ function restart() {
   goTo('hero');
 }
 
+// ============================================================
+// INIT
+// ============================================================
 renderOptions();
 </script>
 
