@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Valorador Inteligente Horta Nord · RK Palanca Fontestad</title>
+<meta name="description" content="Calcula el rango de valor de tu vivienda en L'Horta Nord. Estimación basada en 5.025 ventas desde 1976." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          'rk-orange': '#cf731b',
+          'rk-orange-dark': '#a55a14',
+          'rk-orange-light': '#faeeda',
+          'rk-black': '#0a0a0a',
+        },
+        fontFamily: {
+          sans: ['Montserrat', 'system-ui', 'sans-serif'],
+        },
+      }
+    }
+  }
+</script>
+
+<style>
+  body { font-family: 'Montserrat', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  .step { display: none; }
+  .step.active { display: block; animation: fadeIn 0.3s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+  .option-btn { transition: all 0.15s ease; }
+  .option-btn:hover { border-color: #cf731b; background: #fff7ee; }
+  .option-btn.selected { border-color: #cf731b; background: #faeeda; }
+  .progress-bar { transition: width 0.4s ease; }
+  input[type="text"]:focus, input[type="email"]:focus, input[type="tel"]:focus, input[type="number"]:focus, select:focus {
+    outline: none; border-color: #cf731b; box-shadow: 0 0 0 3px rgba(207, 115, 27, 0.15);
+  }
+  .range-slider { -webkit-appearance: none; appearance: none; background: #e5e7eb; height: 6px; border-radius: 3px; }
+  .range-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 22px; background: #cf731b; border-radius: 50%; cursor: pointer; border: 3px solid white; box-shadow: 0 2px 6px rgba(0,0,0,0.15); }
+  .range-slider::-moz-range-thumb { width: 22px; height: 22px; background: #cf731b; border-radius: 50%; cursor: pointer; border: 3px solid white; box-shadow: 0 2px 6px rgba(0,0,0,0.15); }
+  .gradient-rk { background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%); }
+  .shimmer { background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; }
+  @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+</style>
+</head>
+
+<body class="bg-stone-50 text-rk-black min-h-screen">
+
+<!-- HEADER -->
+<header class="bg-white border-b border-stone-200 sticky top-0 z-40">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
+    <img src="RKPALANCA-horiz.png" alt="RK Palanca Fontestad" class="h-9 w-auto">
+    <div class="hidden sm:flex items-center gap-6 text-xs text-stone-600">
+      <div class="flex items-center gap-2">
+        <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+        <span>Desde 1976 · L'Horta Nord</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section id="hero" class="step active">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 py-10 sm:py-16 text-center">
+    <div class="inline-flex items-center gap-2 bg-rk-orange-light text-rk-orange-dark px-4 py-1.5 rounded-full text-xs font-semibold mb-6">
+      <span class="w-1.5 h-1.5 bg-rk-orange rounded-full"></span>
+      Valoración online · Gratis · Sin compromiso
+    </div>
+    <h1 class="font-extrabold text-4xl sm:text-5xl lg:text-6xl leading-tight mb-5">
+      ¿Cuánto vale tu vivienda<br>en <span class="text-rk-orange">L'Horta Nord</span>?
+    </h1>
+    <p class="text-stone-600 text-lg sm:text-xl max-w-2xl mx-auto mb-8 leading-relaxed">
+      Estimación basada en <strong class="text-rk-black">5.025 viviendas vendidas</strong> desde 1976 en Foios, Massamagrell, Meliana, Museros, Godella y alrededores.
+    </p>
+    <button onclick="goTo('step-1')" class="bg-rk-orange hover:bg-rk-orange-dark text-white font-bold text-base px-8 py-4 rounded-full transition shadow-lg shadow-rk-orange/25 hover:shadow-rk-orange/40">
+      Calcular valor de mi vivienda →
+    </button>
+    <div class="mt-10 grid grid-cols-3 gap-4 sm:gap-8 max-w-2xl mx-auto">
+      <div>
+        <div class="font-extrabold text-2xl sm:text-3xl text-rk-orange">5.025</div>
+        <div class="text-xs text-stone-500 mt-1">Viviendas vendidas</div>
+      </div>
+      <div>
+        <div class="font-extrabold text-2xl sm:text-3xl text-rk-orange">50+</div>
+        <div class="text-xs text-stone-500 mt-1">Años de experiencia</div>
+      </div>
+      <div>
+        <div class="font-extrabold text-2xl sm:text-3xl text-rk-orange">2 min</div>
+        <div class="text-xs text-stone-500 mt-1">Completar valoración</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FORMULARIO MULTI-STEP -->
+<section id="form-wrapper" class="max-w-2xl mx-auto px-4 sm:px-6 pb-16">
+
+  <!-- Progreso -->
+  <div id="progress-wrapper" class="mb-8 hidden">
+    <div class="flex justify-between items-center mb-2">
+      <span id="progress-label" class="text-xs font-semibold text-stone-500 tracking-wide">PASO 1 DE 6</span>
+      <span id="progress-percent" class="text-xs font-bold text-rk-orange">16%</span>
+    </div>
+    <div class="h-1.5 bg-stone-200 rounded-full overflow-hidden">
+      <div id="progress-bar" class="progress-bar h-full bg-rk-orange rounded-full" style="width: 16%"></div>
+    </div>
+  </div>
+
+  <!-- PASO 1: Municipio -->
+  <div id="step-1" class="step bg-white rounded-2xl border border-stone-200 p-6 sm:p-8">
+    <h2 class="font-extrabold text-2xl mb-2">¿En qué municipio está tu vivienda?</h2>
+    <p class="text-stone-500 text-sm mb-5">Cubrimos Horta Nord, Oest, Sud y València capital</p>
+
+    <!-- Buscador -->
+    <div class="relative mb-4">
+      <input type="text" id="search-municipio" placeholder="Buscar municipio..." class="w-full pl-10 pr-4 py-3 border border-stone-300 rounded-lg text-sm" oninput="filterMunicipios(this.value)">
+      <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M16 10a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
+    </div>
+
+    <!-- Tabs de comarca -->
+    <div class="flex gap-2 mb-4 overflow-x-auto pb-1" id="tabs-comarca">
+      <button class="tab-comarca active whitespace-nowrap px-4 py-2 rounded-full text-xs font-bold border-2 border-rk-orange bg-rk-orange text-white transition" data-comarca="Horta Nord" onclick="selectComarca(this, 'Horta Nord')">Horta Nord</button>
+      <button class="tab-comarca whitespace-nowrap px-4 py-2 rounded-full text-xs font-bold border-2 border-stone-200 bg-white text-stone-600 transition" data-comarca="Horta Oest" onclick="selectComarca(this, 'Horta Oest')">Horta Oest</button>
+      <button class="tab-comarca whitespace-nowrap px-4 py-2 rounded-full text-xs font-bold border-2 border-stone-200 bg-white text-stone-600 transition" data-comarca="Horta Sud" onclick="selectComarca(this, 'Horta Sud')">Horta Sud</button>
+      <button class="tab-comarca whitespace-nowrap px-4 py-2 rounded-full text-xs font-bold border-2 border-stone-200 bg-white text-stone-600 transition" data-comarca="València" onclick="selectComarca(this, 'València')">València capital</button>
+    </div>
+
+    <div class="grid grid-cols-2 gap-3 max-h-80 overflow-y-auto pr-1" id="municipios-grid"></div>
+    <p id="municipios-empty" class="text-center text-sm text-stone-400 py-6 hidden">No hay coincidencias</p>
+
+    <div class="mt-6 flex justify-between">
+      <button onclick="goTo('hero')" class="text-stone-500 text-sm font-semibold hover:text-rk-black">← Volver</button>
+      <button onclick="nextStep(1)" id="btn-next-1" class="bg-rk-orange hover:bg-rk-orange-dark text-white font-bold px-6 py-3 rounded-full transition disabled:bg-stone-300 disabled:cursor-not-allowed" disabled>Continuar →</button>
+    </div>
+  </div>
+
+  <!-- PASO 2: Tipo de vivienda -->
+  <div id="step-2" class="step bg-white rounded-2xl border border-stone-200 p-6 sm:p-8">
+    <h2 class="font-extrabold text-2xl mb-2">¿Qué tipo de vivienda es?</h2>
+    <p class="text-stone-500 text-sm mb-6">Selecciona el tipo que mejor describa tu propiedad</p>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="tipos-grid"></div>
+    <div class="mt-6 flex justify-between">
+      <button onclick="goTo('step-1')" class="text-stone-500 text-sm font-semibold hover:text-rk-black">← Atrás</button>
+      <button onclick="nextStep(2)" id="btn-next-2" class="bg-rk-orange hover:bg-rk-orange-dark text-white font-bold px-6 py-3 rounded-full transition disabled:bg-stone-300 disabled:cursor-not-allowed" disabled>Continuar →</button>
+    </div>
+  </div>
+
+  <!-- PASO 3: Superficie y habitaciones -->
+  <div id="step-3" class="step bg-white rounded-2xl border border-stone-200 p-6 sm:p-8">
+    <h2 class="font-extrabold text-2xl mb-2">Características principales</h2>
+    <p class="text-stone-500 text-sm mb-6">Cuéntanos el tamaño y distribución</p>
+
+    <div class="mb-6">
+      <label class="block text-sm font-semibold mb-2">Superficie construida</label>
+      <div class="flex items-center gap-4">
+        <input type="range" id="slider-m2" min="40" max="300" value="100" step="5" class="range-slider flex-1" oninput="document.getElementById('val-m2').textContent = this.value + ' m²'; data.m2 = parseInt(this.value);">
+        <div id="val-m2" class="font-extrabold text-xl text-rk-orange min-w-[90px] text-right">100 m²</div>
+      </div>
+      <div class="flex justify-between text-xs text-stone-400 mt-1"><span>40 m²</span><span>300 m²</span></div>
+    </div>
+
+    <div class="mb-6">
+      <label class="block text-sm font-semibold mb-2">Habitaciones</label>
+      <div class="grid grid-cols-5 gap-2" id="hab-grid"></div>
+    </div>
+
+    <div class="mb-2">
+      <label class="block text-sm font-semibold mb-2">Baños</label>
+      <div class="grid grid-cols-4 gap-2" id="ban-grid"></div>
+    </div>
+
+    <div class="mt-6 flex justify-between">
+      <button onclick="goTo('step-2')" class="text-stone-500 text-sm font-semibold hover:text-rk-black">← Atrás</button>
+      <button onclick="nextStep(3)" id="btn-next-3" class="bg-rk-orange hover:bg-rk-orange-dark text-white font-bold px-6 py-3 rounded-full transition disabled:bg-stone-300 disabled:cursor-not-allowed" disabled>Continuar →</button>
+    </div>
+  </div>
+
+  <!-- PASO 4: Estado -->
+  <div id="step-4" class="step bg-white rounded-2xl border border-stone-200 p-6 sm:p-8">
+    <h2 class="font-extrabold text-2xl mb-2">¿En qué estado está la vivienda?</h2>
+    <p class="text-stone-500 text-sm mb-6">El estado influye directamente en el rango de valor</p>
+    <div class="grid grid-cols-1 gap-3" id="estado-grid"></div>
+    <div class="mt-6 flex justify-between">
+      <button onclick="goTo('step-3')" class="text-stone-500 text-sm font-semibold hover:text-rk-black">← Atrás</button>
+      <button onclick="nextStep(4)" id="btn-next-4" class="bg-rk-orange hover:bg-rk-orange-dark text-white font-bold px-6 py-3 rounded-full transition disabled:bg-stone-300 disabled:cursor-not-allowed" disabled>Continuar →</button>
+    </div>
+  </div>
+
+  <!-- PASO 5: Extras -->
+  <div id="step-5" class="step bg-white rounded-2xl border border-stone-200 p-6 sm:p-8">
+    <h2 class="font-extrabold text-2xl mb-2">¿Qué extras tiene la vivienda?</h2>
+    <p class="text-stone-500 text-sm mb-6">Selecciona todos los que correspondan (opcional)</p>
+    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3" id="extras-grid"></div>
+    <div class="mt-6 flex justify-between">
+      <button onclick="goTo('step-4')" class="text-stone-500 text-sm font-semibold hover:text-rk-black">← Atrás</button>
+      <button onclick="nextStep(5)" class="bg-rk-orange hover:bg-rk-orange-dark text-white font-bold px-6 py-3 rounded-full transition">Continuar →</button>
+    </div>
+  </div>
+
+  <!-- PASO 6: Contacto -->
+  <div id="step-6" class="step bg-white rounded-2xl border border-stone-200 p-6 sm:p-8">
+
+    <!-- Logo -->
+    <div class="flex justify-center mb-6 pb-6 border-b border-stone-100">
+      <img src="RKPALANCA-horiz.png" alt="RK Palanca Fontestad" class="h-10 w-auto">
+    </div>
+
+    <div class="bg-rk-orange-light border border-rk-orange/30 rounded-xl p-4 mb-6">
+      <div class="flex items-start gap-3">
+        <div class="w-8 h-8 bg-rk-orange text-white rounded-full flex items-center justify-center flex-shrink-0 font-bold text-sm">✓</div>
+        <div>
+          <div class="font-bold text-sm text-rk-black">Ya casi lo tenemos</div>
+          <div class="text-xs text-stone-600 mt-1">Déjanos tus datos y te enviamos la valoración detallada al instante. Un asesor de RK podrá afinar el precio con comparables reales de tu zona.</div>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="font-extrabold text-2xl mb-2">¿Dónde te enviamos la valoración?</h2>
+    <p class="text-stone-500 text-sm mb-6">Sin spam. Sin compromiso.</p>
+
+    <div class="space-y-4">
+      <div>
+        <label class="block text-sm font-semibold mb-1.5">Nombre</label>
+        <input type="text" id="contact-nombre" class="w-full px-4 py-3 border border-stone-300 rounded-lg text-sm" placeholder="Tu nombre">
+      </div>
+      <div>
+        <label class="block text-sm font-semibold mb-1.5">Email</label>
+        <input type="email" id="contact-email" class="w-full px-4 py-3 border border-stone-300 rounded-lg text-sm" placeholder="tu@email.com">
+      </div>
+      <div>
+        <label class="block text-sm font-semibold mb-1.5">Teléfono <span class="text-stone-400 font-normal">(opcional, para afinar valoración)</span></label>
+        <input type="tel" id="contact-telefono" class="w-full px-4 py-3 border border-stone-300 rounded-lg text-sm" placeholder="600 000 000">
+      </div>
+      <div>
+        <label class="block text-sm font-semibold mb-1.5">¿Cuándo piensas vender?</label>
+        <select id="contact-urgencia" class="w-full px-4 py-3 border border-stone-300 rounded-lg text-sm bg-white">
+          <option value="">Selecciona una opción</option>
+          <option value="ya">En menos de 3 meses</option>
+          <option value="pronto">En 3-6 meses</option>
+          <option value="valorando">Estoy valorando, sin urgencia</option>
+          <option value="info">Solo quiero saber cuánto vale</option>
+        </select>
+      </div>
+      <div class="flex items-start gap-2 pt-2">
+        <input type="checkbox" id="contact-rgpd" class="mt-1 accent-rk-orange">
+        <label for="contact-rgpd" class="text-xs text-stone-500 leading-relaxed">
+          Acepto la <a href="https://www.inmobiliariapalanca.com/politica-de-privacidad/" target="_blank" class="underline text-rk-orange hover:text-rk-orange-dark font-semibold">política de privacidad</a> y que RK Palanca Fontestad me contacte con información sobre mi valoración. Mis datos están protegidos según el RGPD.
+        </label>
+      </div>
+    </div>
+
+    <div class="mt-6 flex justify-between items-center">
+      <button onclick="goTo('step-5')" class="text-stone-500 text-sm font-semibold hover:text-rk-black">← Atrás</button>
+      <button onclick="submitForm()" id="btn-submit" class="bg-rk-orange hover:bg-rk-orange-dark text-white font-bold px-8 py-3.5 rounded-full transition shadow-lg shadow-rk-orange/25">
+        Ver mi valoración →
+      </button>
+    </div>
+  </div>
+
+  <!-- PASO 7: Loading -->
+  <div id="step-loading" class="step">
+    <div class="bg-white rounded-2xl border border-stone-200 p-10 text-center">
+      <div class="w-16 h-16 mx-auto mb-6 border-4 border-rk-orange border-t-transparent rounded-full animate-spin"></div>
+      <h2 class="font-extrabold text-xl mb-2">Calculando tu valoración</h2>
+      <p class="text-stone-500 text-sm" id="loading-text">Cruzando datos con el histórico de RK Palanca Fontestad...</p>
+    </div>
+  </div>
+
+  <!-- PASO 8: Resultado -->
+  <div id="step-result" class="step">
+    <div class="bg-gradient-to-br from-rk-black to-stone-900 text-white rounded-2xl p-6 sm:p-10 mb-4">
+      <div class="text-xs font-semibold text-rk-orange tracking-widest mb-3">VALOR ESTIMADO</div>
+      <div class="flex items-baseline gap-2 mb-2 flex-wrap">
+        <span id="result-min" class="text-3xl sm:text-5xl font-extrabold">—</span>
+        <span class="text-stone-400">—</span>
+        <span id="result-max" class="text-3xl sm:text-5xl font-extrabold text-rk-orange">—</span>
+      </div>
+      <div class="text-sm text-stone-400 mb-6" id="result-resumen">—</div>
+
+      <div class="grid grid-cols-3 gap-3 border-t border-stone-700 pt-6">
+        <div>
+          <div class="text-[10px] text-stone-400 tracking-widest mb-1">€/M² ESTIMADO</div>
+          <div class="font-bold text-lg" id="result-eurom2">—</div>
+        </div>
+        <div>
+          <div class="text-[10px] text-stone-400 tracking-widest mb-1">TIEMPO MEDIO VENTA</div>
+          <div class="font-bold text-lg" id="result-tiempo">—</div>
+        </div>
+        <div>
+          <div class="text-[10px] text-stone-400 tracking-widest mb-1">DEMANDA ZONA</div>
+          <div class="font-bold text-lg" id="result-demanda">—</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-2xl border border-stone-200 p-6 sm:p-8 mb-4">
+      <h3 class="font-extrabold text-lg mb-3">¿Quieres afinar este precio?</h3>
+      <p class="text-sm text-stone-600 mb-5 leading-relaxed">Esta valoración es una estimación automática. Un asesor de RK puede analizar tu caso con <strong>comparables reales de tu calle</strong> y darte un precio 95% más preciso. <strong>Sin compromiso.</strong></p>
+      <div class="space-y-3">
+        <a href="tel:+34961490135" class="flex items-center justify-between p-4 border border-stone-200 rounded-xl hover:border-rk-orange hover:bg-rk-orange-light/30 transition group">
+          <div>
+            <div class="font-bold text-sm">Llamar ahora</div>
+            <div class="text-xs text-stone-500">+34 961 490 135 · L-V 9:30-13:30 / 16:30-20:00</div>
+          </div>
+          <span class="text-rk-orange group-hover:translate-x-1 transition">→</span>
+        </a>
+        <a id="whatsapp-link" href="#" target="_blank" class="flex items-center justify-between p-4 border border-stone-200 rounded-xl hover:border-rk-orange hover:bg-rk-orange-light/30 transition group">
+          <div>
+            <div class="font-bold text-sm">Escribir por WhatsApp</div>
+            <div class="text-xs text-stone-500">Respuesta habitual en menos de 1h</div>
+          </div>
+          <span class="text-rk-orange group-hover:translate-x-1 transition">→</span>
+        </a>
+        <button onclick="restart()" class="w-full p-4 border border-stone-200 rounded-xl hover:border-stone-400 transition text-sm font-semibold text-stone-600">
+          ↺ Valorar otra vivienda
+        </button>
+      </div>
+    </div>
+
+    <div class="bg-rk-orange-light/50 border border-rk-orange/20 rounded-2xl p-5 text-xs text-stone-600 leading-relaxed">
+      <strong class="text-rk-black">Cómo calculamos esta estimación:</strong> cruzamos las características de tu vivienda con el precio medio €/m² actualizado de tu municipio y aplicamos ajustes por tipología, estado y extras. El rango refleja la horquilla real de mercado. Un asesor puede afinarlo con comparables exactos de tu calle.
+    </div>
+  </div>
+
+</section>
+
+<!-- FOOTER -->
+<footer class="border-t border-stone-200 bg-white mt-8">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 py-6 text-center text-xs text-stone-500">
+    © RK Palanca Fontestad · <strong class="text-stone-700">Tradición desde 1976 · Innovación sin límites</strong>
+  </div>
+</footer>
+
+<script src="config.js" onerror="void 0"></script>
+
+<script>
+const WEBHOOK_URL_DEFAULT = 'https://script.google.com/macros/s/AKfycbxaRsvdoRkyTdjUFj5vqTKosiLEXVcr2_k3flNsutGi68eJaf97qjlsCTH4DTb83ApmGA/exec';
+const WEBHOOK_URL = (window.RK_CONFIG && window.RK_CONFIG.WEBHOOK_URL) || WEBHOOK_URL_DEFAULT;
+
+const MUNICIPIOS = {
+  foios:         { nombre: 'Foios',               comarca: 'Horta Nord', eurom2_piso: 1516, eurom2_casa: 1394, demanda: 'Alta',      tiempoVenta: 60 },
+  massamagrell:  { nombre: 'Massamagrell',        comarca: 'Horta Nord', eurom2_piso: 1424, eurom2_casa: 1391, demanda: 'Alta',      tiempoVenta: 62 },
+  meliana:       { nombre: 'Meliana',             comarca: 'Horta Nord', eurom2_piso: 1750, eurom2_casa: 1700, demanda: 'Alta',      tiempoVenta: 55 },
+  museros:       { nombre: 'Museros',             comarca: 'Horta Nord', eurom2_piso: 2434, eurom2_casa: 2139, demanda: 'Muy alta',  tiempoVenta: 45 },
+  godella:       { nombre: 'Godella',             comarca: 'Horta Nord', eurom2_piso: 1923, eurom2_casa: 2393, demanda: 'Muy alta',  tiempoVenta: 45 },
+  rocafort:      { nombre: 'Rocafort',            comarca: 'Horta Nord', eurom2_piso: 1933, eurom2_casa: 2445, demanda: 'Muy alta',  tiempoVenta: 50 },
+  alboraia:      { nombre: 'Alboraia',            comarca: 'Horta Nord', eurom2_piso: 3265, eurom2_casa: 2009, demanda: 'Muy alta',  tiempoVenta: 40 },
+  tavernes:      { nombre: 'Tavernes Blanques',   comarca: 'Horta Nord', eurom2_piso: 2098, eurom2_casa: 2098, demanda: 'Alta',      tiempoVenta: 50 },
+  puzol:         { nombre: 'Puçol',               comarca: 'Horta Nord', eurom2_piso: 1881, eurom2_casa: 1947, demanda: 'Alta',      tiempoVenta: 55 },
+  burjassot:     { nombre: 'Burjassot',           comarca: 'Horta Nord', eurom2_piso: 1576, eurom2_casa: 1603, demanda: 'Alta',      tiempoVenta: 60 },
+  moncada:       { nombre: 'Moncada',             comarca: 'Horta Nord', eurom2_piso: 1556, eurom2_casa: 1791, demanda: 'Alta',      tiempoVenta: 60 },
+  albalat:       { nombre: 'Albalat dels Sorells',comarca: 'Horta Nord', eurom2_piso: 1675, eurom2_casa: 1675, demanda: 'Media',     tiempoVenta: 75 },
+  massalfassar:  { nombre: 'Massalfassar',        comarca: 'Horta Nord', eurom2_piso: 1802, eurom2_casa: 1802, demanda: 'Media',     tiempoVenta: 70 },
+  paterna:       { nombre: 'Paterna',             comarca: 'Horta Oest', eurom2_piso: 1763, eurom2_casa: 2279, demanda: 'Alta',      tiempoVenta: 55 },
+  mislata:       { nombre: 'Mislata',             comarca: 'Horta Oest', eurom2_piso: 1882, eurom2_casa: 1751, demanda: 'Muy alta',  tiempoVenta: 40 },
+  quart:         { nombre: 'Quart de Poblet',     comarca: 'Horta Oest', eurom2_piso: 2234, eurom2_casa: 1370, demanda: 'Alta',      tiempoVenta: 55 },
+  aldaia:        { nombre: 'Aldaia',              comarca: 'Horta Oest', eurom2_piso: 1878, eurom2_casa: 1308, demanda: 'Alta',      tiempoVenta: 60 },
+  manises:       { nombre: 'Manises',             comarca: 'Horta Oest', eurom2_piso: 1584, eurom2_casa: 1457, demanda: 'Alta',      tiempoVenta: 60 },
+  xirivella:     { nombre: 'Xirivella',           comarca: 'Horta Oest', eurom2_piso: 1546, eurom2_casa: 1444, demanda: 'Alta',      tiempoVenta: 58 },
+  picanya:       { nombre: 'Picanya',             comarca: 'Horta Oest', eurom2_piso: 1687, eurom2_casa: 1807, demanda: 'Alta',      tiempoVenta: 55 },
+  torrent:       { nombre: 'Torrent',             comarca: 'Horta Oest', eurom2_piso: 1528, eurom2_casa: 1558, demanda: 'Alta',      tiempoVenta: 60 },
+  alaquas:       { nombre: 'Alaquàs',             comarca: 'Horta Oest', eurom2_piso: 1436, eurom2_casa: 1159, demanda: 'Media',     tiempoVenta: 65 },
+  paiporta:      { nombre: 'Paiporta',            comarca: 'Horta Sud',  eurom2_piso: 1688, eurom2_casa: 1443, demanda: 'Alta',      tiempoVenta: 55 },
+  massanassa:    { nombre: 'Massanassa',          comarca: 'Horta Sud',  eurom2_piso: 1683, eurom2_casa: 1101, demanda: 'Media',     tiempoVenta: 70 },
+  alfafar:       { nombre: 'Alfafar',             comarca: 'Horta Sud',  eurom2_piso: 1474, eurom2_casa: 1201, demanda: 'Alta',      tiempoVenta: 60 },
+  albal:         { nombre: 'Albal',               comarca: 'Horta Sud',  eurom2_piso: 1470, eurom2_casa: 1096, demanda: 'Alta',      tiempoVenta: 60 },
+  sedavi:        { nombre: 'Sedaví',              comarca: 'Horta Sud',  eurom2_piso: 1432, eurom2_casa: 1258, demanda: 'Alta',      tiempoVenta: 60 },
+  catarroja:     { nombre: 'Catarroja',           comarca: 'Horta Sud',  eurom2_piso: 1357, eurom2_casa: 1049, demanda: 'Media',     tiempoVenta: 65 },
+  benetusser:    { nombre: 'Benetússer',          comarca: 'Horta Sud',  eurom2_piso: 1336, eurom2_casa: 1215, demanda: 'Alta',      tiempoVenta: 60 },
+  picassent:     { nombre: 'Picassent',           comarca: 'Horta Sud',  eurom2_piso: 1179, eurom2_casa: 1265, demanda: 'Media',     tiempoVenta: 70 },
+  silla:         { nombre: 'Silla',               comarca: 'Horta Sud',  eurom2_piso: 1240, eurom2_casa: 1101, demanda: 'Media',     tiempoVenta: 70 },
+  val_eixample:  { nombre: 'L\'Eixample',         comarca: 'València',   eurom2_piso: 5540, eurom2_casa: 5540, demanda: 'Muy alta',  tiempoVenta: 30 },
+  val_ciutat:    { nombre: 'Ciutat Vella',        comarca: 'València',   eurom2_piso: 5045, eurom2_casa: 5045, demanda: 'Muy alta',  tiempoVenta: 35 },
+  val_plareal:   { nombre: 'El Pla del Real',     comarca: 'València',   eurom2_piso: 4495, eurom2_casa: 4495, demanda: 'Muy alta',  tiempoVenta: 35 },
+  val_extramurs: { nombre: 'Extramurs',           comarca: 'València',   eurom2_piso: 4040, eurom2_casa: 4040, demanda: 'Muy alta',  tiempoVenta: 40 },
+  val_campanar:  { nombre: 'Campanar',            comarca: 'València',   eurom2_piso: 3960, eurom2_casa: 3960, demanda: 'Muy alta',  tiempoVenta: 40 },
+  val_quatre:    { nombre: 'Quatre Carreres',     comarca: 'València',   eurom2_piso: 3866, eurom2_casa: 3866, demanda: 'Muy alta',  tiempoVenta: 40 },
+  val_caminsmar: { nombre: 'Camins al Grau',      comarca: 'València',   eurom2_piso: 3784, eurom2_casa: 3784, demanda: 'Muy alta',  tiempoVenta: 40 },
+  val_maritims:  { nombre: 'Poblats Marítims',    comarca: 'València',   eurom2_piso: 3541, eurom2_casa: 3541, demanda: 'Alta',      tiempoVenta: 45 },
+  val_algiros:   { nombre: 'Algirós',             comarca: 'València',   eurom2_piso: 3464, eurom2_casa: 3464, demanda: 'Alta',      tiempoVenta: 45 },
+  val_benimaclet:{ nombre: 'Benimaclet',          comarca: 'València',   eurom2_piso: 3222, eurom2_casa: 3222, demanda: 'Alta',      tiempoVenta: 45 },
+  val_saidia:    { nombre: 'La Saïdia',           comarca: 'València',   eurom2_piso: 3192, eurom2_casa: 3192, demanda: 'Alta',      tiempoVenta: 45 },
+  val_patraix:   { nombre: 'Patraix',             comarca: 'València',   eurom2_piso: 3178, eurom2_casa: 3178, demanda: 'Alta',      tiempoVenta: 45 },
+  val_benicalap: { nombre: 'Benicalap',           comarca: 'València',   eurom2_piso: 3134, eurom2_casa: 3134, demanda: 'Alta',      tiempoVenta: 50 },
+  val_jesus:     { nombre: 'Jesús',               comarca: 'València',   eurom2_piso: 2925, eurom2_casa: 2925, demanda: 'Alta',      tiempoVenta: 50 },
+  val_olivereta: { nombre: 'L\'Olivereta',        comarca: 'València',   eurom2_piso: 2782, eurom2_casa: 2782, demanda: 'Alta',      tiempoVenta: 55 },
+  val_rascanya:  { nombre: 'Rascanya',            comarca: 'València',   eurom2_piso: 2548, eurom2_casa: 2548, demanda: 'Media',     tiempoVenta: 60 },
+  otro:          { nombre: 'Otro municipio',      comarca: 'Otro',       eurom2_piso: 1600, eurom2_casa: 1500, demanda: 'Media',     tiempoVenta: 65 },
+};
+
+const TIPOS = {
+  piso:       { nombre: 'Piso',        icon: '🏢', factor: 1.00, usaPrecio: 'piso' },
+  atico:      { nombre: 'Ático',       icon: '🏙️', factor: 1.18, usaPrecio: 'piso' },
+  duplex:     { nombre: 'Dúplex',      icon: '🏠', factor: 1.08, usaPrecio: 'piso' },
+  chalet:     { nombre: 'Chalet / Casa independiente', icon: '🏡', factor: 1.00, usaPrecio: 'casa' },
+  adosado:    { nombre: 'Adosado',     icon: '🏘️', factor: 1.00, usaPrecio: 'casa' },
+  planta_baja:{ nombre: 'Planta baja', icon: '🚪', factor: 0.92, usaPrecio: 'piso' },
+};
+
+const ESTADOS = [
+  { id: 'nuevo',          nombre: 'A estrenar / Obra nueva',      desc: 'Nunca se ha vivido en ella',                    factor: 1.20 },
+  { id: 'reformado',      nombre: 'Reformado recientemente',      desc: 'Reforma integral en los últimos 5 años',        factor: 1.10 },
+  { id: 'bueno',          nombre: 'Buen estado',                  desc: 'Se puede entrar a vivir sin obras',             factor: 1.00 },
+  { id: 'reformar',       nombre: 'Necesita reforma',             desc: 'Cocina, baños o instalaciones antiguos',        factor: 0.82 },
+  { id: 'reformar_total', nombre: 'A reformar por completo',      desc: 'Requiere reforma integral',                     factor: 0.70 },
+];
+
+const EXTRAS = [
+  { id: 'terraza',   nombre: 'Terraza',            factor: 0.05 },
+  { id: 'balcon',    nombre: 'Balcón',             factor: 0.02 },
+  { id: 'garaje',    nombre: 'Garaje',             factor: 0.06 },
+  { id: 'trastero',  nombre: 'Trastero',           factor: 0.02 },
+  { id: 'ascensor',  nombre: 'Ascensor',           factor: 0.04 },
+  { id: 'aire',      nombre: 'Aire acondicionado', factor: 0.02 },
+  { id: 'piscina',   nombre: 'Piscina',            factor: 0.05 },
+  { id: 'jardin',    nombre: 'Jardín',             factor: 0.04 },
+  { id: 'amueblado', nombre: 'Amueblado',          factor: 0.01 },
+];
+
+const data = {
+  municipio: null, tipo: null, m2: 100,
+  habitaciones: null, banos: null, estado: null, extras: [],
+  nombre: '', email: '', telefono: '', urgencia: '',
+};
+
+const STEPS = ['step-1','step-2','step-3','step-4','step-5','step-6'];
+let currentStep = 0;
+
+function renderOptions() {
+  renderMunicipios('Horta Nord', '');
+
+  const gridT = document.getElementById('tipos-grid');
+  Object.entries(TIPOS).forEach(([id, t]) => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn border-2 border-stone-200 bg-white rounded-xl p-4 text-left flex items-center gap-3';
+    btn.innerHTML = `<span class="text-2xl">${t.icon}</span><span class="font-bold text-sm">${t.nombre}</span>`;
+    btn.onclick = () => selectSingle('tipos-grid', btn, 'tipo', id, 'btn-next-2');
+    gridT.appendChild(btn);
+  });
+
+  const gridH = document.getElementById('hab-grid');
+  ['1','2','3','4','5+'].forEach(n => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn border-2 border-stone-200 bg-white rounded-lg py-3 font-bold text-sm';
+    btn.textContent = n;
+    btn.onclick = () => { selectSingle('hab-grid', btn, 'habitaciones', n); checkStep3(); };
+    gridH.appendChild(btn);
+  });
+
+  const gridB = document.getElementById('ban-grid');
+  ['1','2','3','4+'].forEach(n => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn border-2 border-stone-200 bg-white rounded-lg py-3 font-bold text-sm';
+    btn.textContent = n;
+    btn.onclick = () => { selectSingle('ban-grid', btn, 'banos', n); checkStep3(); };
+    gridB.appendChild(btn);
+  });
+
+  const gridE = document.getElementById('estado-grid');
+  ESTADOS.forEach(e => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn border-2 border-stone-200 bg-white rounded-xl p-4 text-left';
+    btn.innerHTML = `<div class="font-bold text-sm">${e.nombre}</div><div class="text-xs text-stone-500 mt-0.5">${e.desc}</div>`;
+    btn.onclick = () => selectSingle('estado-grid', btn, 'estado', e.id, 'btn-next-4');
+    gridE.appendChild(btn);
+  });
+
+  const gridX = document.getElementById('extras-grid');
+  EXTRAS.forEach(x => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn border-2 border-stone-200 bg-white rounded-xl py-3 px-4 text-sm font-semibold';
+    btn.textContent = x.nombre;
+    btn.onclick = () => toggleExtra(btn, x.id);
+    gridX.appendChild(btn);
+  });
+}
+
+function selectSingle(gridId, btn, field, value, nextBtnId) {
+  document.getElementById(gridId).querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  data[field] = value;
+  if (nextBtnId) document.getElementById(nextBtnId).disabled = false;
+}
+
+function toggleExtra(btn, id) {
+  btn.classList.toggle('selected');
+  const idx = data.extras.indexOf(id);
+  if (idx >= 0) data.extras.splice(idx, 1);
+  else data.extras.push(id);
+}
+
+function checkStep3() {
+  document.getElementById('btn-next-3').disabled = !(data.m2 && data.habitaciones && data.banos);
+}
+
+let comarcaActual = 'Horta Nord';
+
+function renderMunicipios(comarca, searchTerm) {
+  const grid = document.getElementById('municipios-grid');
+  const empty = document.getElementById('municipios-empty');
+  grid.innerHTML = '';
+  const term = (searchTerm || '').toLowerCase().trim();
+  const matches = Object.entries(MUNICIPIOS).filter(([id, m]) => {
+    return (!term && m.comarca === comarca) || (term && m.nombre.toLowerCase().includes(term));
+  });
+  if (matches.length === 0) { empty.classList.remove('hidden'); return; }
+  empty.classList.add('hidden');
+  matches.forEach(([id, m]) => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn border-2 border-stone-200 bg-white rounded-xl p-4 text-left';
+    if (data.municipio === id) btn.classList.add('selected');
+    btn.innerHTML = `<div class="font-bold text-sm">${m.nombre}</div>`;
+    btn.onclick = () => selectSingle('municipios-grid', btn, 'municipio', id, 'btn-next-1');
+    grid.appendChild(btn);
+  });
+}
+
+function selectComarca(btn, comarca) {
+  comarcaActual = comarca;
+  document.getElementById('search-municipio').value = '';
+  document.querySelectorAll('.tab-comarca').forEach(t => {
+    t.classList.remove('active', 'border-rk-orange', 'bg-rk-orange', 'text-white');
+    t.classList.add('border-stone-200', 'bg-white', 'text-stone-600');
+  });
+  btn.classList.add('active', 'border-rk-orange', 'bg-rk-orange', 'text-white');
+  btn.classList.remove('border-stone-200', 'bg-white', 'text-stone-600');
+  renderMunicipios(comarca, '');
+}
+
+function filterMunicipios(term) {
+  if (term && term.trim()) renderMunicipios(null, term);
+  else renderMunicipios(comarcaActual, '');
+}
+
+function goTo(stepId) {
+  document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+  document.getElementById(stepId).classList.add('active');
+  const idx = STEPS.indexOf(stepId);
+  const isFormStep = idx >= 0;
+  document.getElementById('progress-wrapper').classList.toggle('hidden', !isFormStep);
+  if (isFormStep) {
+    currentStep = idx;
+    const pct = Math.round(((idx + 1) / STEPS.length) * 100);
+    document.getElementById('progress-label').textContent = `PASO ${idx + 1} DE ${STEPS.length}`;
+    document.getElementById('progress-percent').textContent = pct + '%';
+    document.getElementById('progress-bar').style.width = pct + '%';
+  }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function nextStep(current) {
+  goTo(STEPS[current]);
+}
+
+function calcularValor() {
+  const muni = MUNICIPIOS[data.municipio];
+  const tipo = TIPOS[data.tipo];
+  const estado = ESTADOS.find(e => e.id === data.estado);
+  const eurom2Base = tipo.usaPrecio === 'casa' ? muni.eurom2_casa : muni.eurom2_piso;
+  let base = eurom2Base * data.m2 * tipo.factor * estado.factor;
+  let factorExtras = 1;
+  data.extras.forEach(id => {
+    const x = EXTRAS.find(e => e.id === id);
+    if (x) factorExtras += x.factor;
+  });
+  base *= factorExtras;
+  const habNum = data.habitaciones === '5+' ? 5 : parseInt(data.habitaciones);
+  const m2PorHab = data.m2 / habNum;
+  if (m2PorHab < 18) base *= 0.95;
+  if (m2PorHab > 35) base *= 1.03;
+  return {
+    min: Math.round(base * 0.93 / 1000) * 1000,
+    max: Math.round(base * 1.07 / 1000) * 1000,
+    eurom2: Math.round(base / data.m2),
+    municipio: muni.nombre,
+    tiempoVenta: muni.tiempoVenta,
+    demanda: muni.demanda,
+  };
+}
+
+function submitForm() {
+  const nombre = document.getElementById('contact-nombre').value.trim();
+  const email = document.getElementById('contact-email').value.trim();
+  const telefono = document.getElementById('contact-telefono').value.trim();
+  const urgencia = document.getElementById('contact-urgencia').value;
+  const rgpd = document.getElementById('contact-rgpd').checked;
+
+  if (!nombre || !email || !rgpd) {
+    alert('Por favor, completa nombre, email y acepta la política de privacidad.');
+    return;
+  }
+
+  data.nombre = nombre; data.email = email;
+  data.telefono = telefono; data.urgencia = urgencia;
+
+  saveLead();
+  goTo('step-loading');
+
+  const loadingTexts = [
+    'Cruzando datos con el histórico de RK Palanca Fontestad...',
+    'Analizando 5.025 ventas desde 1976...',
+    'Aplicando comparables de tu zona...',
+    'Preparando tu valoración...'
+  ];
+  let i = 0;
+  const loadingInterval = setInterval(() => {
+    i = (i + 1) % loadingTexts.length;
+    document.getElementById('loading-text').textContent = loadingTexts[i];
+  }, 700);
+
+  setTimeout(() => {
+    clearInterval(loadingInterval);
+    const r = calcularValor();
+    document.getElementById('result-min').textContent = r.min.toLocaleString('es-ES') + ' €';
+    document.getElementById('result-max').textContent = r.max.toLocaleString('es-ES') + ' €';
+    document.getElementById('result-resumen').textContent = `${TIPOS[data.tipo].nombre} de ${data.m2} m² en ${r.municipio} · ${data.habitaciones} hab · ${data.banos} baños`;
+    document.getElementById('result-eurom2').textContent = r.eurom2.toLocaleString('es-ES') + ' €';
+    document.getElementById('result-tiempo').textContent = r.tiempoVenta + ' días';
+    document.getElementById('result-demanda').textContent = r.demanda;
+    const wspMsg = encodeURIComponent(`Hola, soy ${data.nombre}. Acabo de hacer la valoración online de mi ${TIPOS[data.tipo].nombre} en ${r.municipio} (${data.m2} m²). Me gustaría afinar el precio con un asesor.`);
+    document.getElementById('whatsapp-link').href = `https://wa.me/34961490135?text=${wspMsg}`;
+    goTo('step-result');
+  }, 2800);
+}
+
+function saveLead() {
+  const r = calcularValor();
+  const leadData = {
+    fecha: new Date().toISOString(),
+    nombre: data.nombre, email: data.email, telefono: data.telefono,
+    municipio: MUNICIPIOS[data.municipio].nombre,
+    tipo: TIPOS[data.tipo].nombre,
+    m2: data.m2, habitaciones: data.habitaciones, banos: data.banos,
+    estado: ESTADOS.find(e => e.id === data.estado).nombre,
+    extras: data.extras.join(', '),
+    valoracion_min: r.min, valoracion_max: r.max, eurom2: r.eurom2,
+    urgencia: data.urgencia,
+  };
+  if (WEBHOOK_URL) {
+    fetch(WEBHOOK_URL, {
+      method: 'POST', mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(leadData),
+    }).catch(err => console.warn('No se pudo enviar a Google Sheets:', err));
+  }
+}
+
+function restart() {
+  Object.keys(data).forEach(k => {
+    if (Array.isArray(data[k])) data[k] = [];
+    else if (k === 'm2') data[k] = 100;
+    else data[k] = null;
+  });
+  document.querySelectorAll('.option-btn.selected').forEach(b => b.classList.remove('selected'));
+  document.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"]').forEach(i => i.value = '');
+  document.getElementById('contact-urgencia').value = '';
+  document.getElementById('contact-rgpd').checked = false;
+  document.getElementById('slider-m2').value = 100;
+  document.getElementById('val-m2').textContent = '100 m²';
+  data.m2 = 100;
+  ['btn-next-1','btn-next-2','btn-next-3','btn-next-4'].forEach(id => document.getElementById(id).disabled = true);
+  goTo('hero');
+}
+
+renderOptions();
+</script>
+
+</body>
+</html>
